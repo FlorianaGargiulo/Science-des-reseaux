@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="{{ site.lang | default: 'fr' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title and page.url != "/" %}{{ page.title }} · {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ site.description }}">
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+  <script>
+    window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+  </header>
+
+  {% assign chapitres = site.chapitres | sort: "ordre" %}
+  <div class="wrap">
+    <nav class="side" aria-label="Navigation du cours">
+      <a href="{{ '/' | relative_url }}" class="{% if page.url == '/' %}active{% endif %}">Introduction</a>
+      <p class="side-title">Chapitres</p>
+      {% for c in chapitres %}
+        <a href="{{ c.url | relative_url }}" class="{% if c.url == page.url %}active{% endif %}">{{ c.title }}</a>
+      {% endfor %}
+    </nav>
+
+    <main>
+      {% if page.title and page.url != "/" %}<h1>{{ page.title }}</h1>{% endif %}
+      {{ content }}
+
+      {% if page.collection == "chapitres" %}
+        {% for c in chapitres %}{% if c.url == page.url %}{% assign idx = forloop.index0 %}{% endif %}{% endfor %}
+        {% assign prev_idx = idx | minus: 1 %}
+        {% assign next_idx = idx | plus: 1 %}
+        <div class="pager">
+          {% if idx > 0 %}<a href="{{ chapitres[prev_idx].url | relative_url }}">← {{ chapitres[prev_idx].title }}</a>{% else %}<span></span>{% endif %}
+          {% if next_idx < chapitres.size %}<a href="{{ chapitres[next_idx].url | relative_url }}">{{ chapitres[next_idx].title }} →</a>{% endif %}
+        </div>
+      {% endif %}
+    </main>
+  </div>
+
+  <footer>© {{ site.time | date: "%Y" }} · {{ site.title }}</footer>
+</body>
+</html>

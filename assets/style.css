@@ -1,0 +1,43 @@
+:root {
+  --bg: #ffffff; --fg: #1d2330; --muted: #5d6677; --line: #e3e6ec;
+  --accent: #2a5bd7; --soft: #f4f6fa; --code: #f1f3f7;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171f; --fg: #e6e9f0; --muted: #98a1b3; --line: #2a303c;
+    --accent: #7ea2ff; --soft: #1b1f29; --code: #1f2430;
+  }
+}
+* { box-sizing: border-box; }
+html { color-scheme: light dark; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 17px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.top { border-bottom: 1px solid var(--line); padding: 14px 24px; }
+.brand { font-weight: 650; color: var(--fg); font-size: 1.05rem; }
+.wrap { display: flex; gap: 40px; max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+.side { flex: 0 0 260px; font-size: 0.93rem; align-self: flex-start; position: sticky; top: 24px; }
+.side a { display: block; padding: 5px 10px; border-radius: 6px; color: var(--fg); }
+.side a:hover { background: var(--soft); text-decoration: none; }
+.side a.active { background: var(--soft); color: var(--accent); font-weight: 600; }
+.side-title { margin: 18px 10px 6px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+main { flex: 1; min-width: 0; }
+main h1 { margin-top: 0; line-height: 1.25; }
+main h2 { margin-top: 2em; padding-bottom: .25em; border-bottom: 1px solid var(--line); }
+main img { max-width: 100%; }
+main table { border-collapse: collapse; display: block; overflow-x: auto; }
+main th, main td { border: 1px solid var(--line); padding: 6px 12px; }
+code { background: var(--code); padding: 2px 5px; border-radius: 4px; font-size: .92em; }
+pre { background: var(--code); padding: 14px; border-radius: 8px; overflow-x: auto; }
+pre code { background: none; padding: 0; }
+blockquote { margin: 1em 0; padding: .1em 1em; border-left: 3px solid var(--line); color: var(--muted); }
+.todo { color: var(--muted); font-style: italic; }
+.pager { display: flex; justify-content: space-between; gap: 16px; margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--line); font-size: .95rem; }
+footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 32px 0; }
+@media (max-width: 800px) {
+  .wrap { flex-direction: column; gap: 16px; }
+  .side { position: static; flex: none; width: 100%; }
+}

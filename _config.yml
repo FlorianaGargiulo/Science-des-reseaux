@@ -1,0 +1,20 @@
+title: "Science des réseaux sociaux et économiques"
+description: "Support de cours"
+lang: fr
+# Si le dépôt s'appelle "mon-cours" et que le site est sur https://utilisateur.github.io/mon-cours/
+# décommentez et adaptez la ligne suivante :
+# baseurl: "/mon-cours"
+
+collections:
+  chapitres:
+    output: true
+    permalink: /chapitres/:name/
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+exclude:
+  - README.md
