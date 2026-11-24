@@ -1,19 +1,78 @@
-{% assign chapitres = site.chapitres | sort: "ordre" %}
-☰ {{ site.title }}  ◐
-iIntroduction
-Chapitres
+<!doctype html>
+<html lang="{{ site.lang | default: 'fr' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title and page.url != "/" %}{{ page.title }} · {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ site.description }}">
+  <script>
+    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+  <script>
+    window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body class="{% if page.url == '/' %}page-home{% endif %}">
+  {% assign chapitres = site.chapitres | sort: "ordre" %}
 
-{% for c in chapitres %} {% assign p = c.title | split: " — " %} {{ c.ordre }}{{ p.last }} {% endfor %}
-{% if page.title and page.url != "/" %} {% assign tparts = page.title | split: " — " %} {% if tparts.size > 1 %}
-{{ tparts[0] }}
+  <header class="top">
+    <div class="top-inner">
+      <button class="icon-btn menu-btn" type="button" aria-label="Menu" onclick="document.body.classList.toggle('nav-open')">☰</button>
+      <a class="brand" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+      <button class="icon-btn" type="button" aria-label="Changer de thème" onclick="var r=document.documentElement;var c=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var n=c==='dark'?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('theme',n)}catch(e){}">◐</button>
+    </div>
+  </header>
 
-{{ tparts[1] }}
+  <div class="layout">
+    <nav class="side" aria-label="Navigation du cours">
+      <a class="side-link {% if page.url == '/' %}active{% endif %}" href="{{ '/' | relative_url }}">
+        <span class="num">i</span><span>Introduction</span>
+      </a>
+      <p class="side-title">Chapitres</p>
+      {% for c in chapitres %}
+        {% assign p = c.title | split: " — " %}
+        <a class="side-link {% if c.url == page.url %}active{% endif %}" href="{{ c.url | relative_url }}">
+          <span class="num">{{ c.ordre }}</span><span>{{ p.last }}</span>
+        </a>
+      {% endfor %}
+    </nav>
 
-{% else %}
-{{ page.title }}
+    <main>
+      <article>
+        {% if page.title and page.url != "/" %}
+          {% assign tparts = page.title | split: " — " %}
+          {% if tparts.size > 1 %}
+            <p class="eyebrow">{{ tparts[0] }}</p>
+            <h1>{{ tparts[1] }}</h1>
+          {% else %}
+            <h1>{{ page.title }}</h1>
+          {% endif %}
+        {% endif %}
 
-{% endif %} {% endif %} {{ content }}
-{% if page.collection == "chapitres" %} {% for c in chapitres %}{% if c.url == page.url %}{% assign idx = forloop.index0 %}{% endif %}{% endfor %} {% assign prev_idx = idx | minus: 1 %} {% assign next_idx = idx | plus: 1 %}
-{% if idx > 0 %} ← Précédent{{ chapitres[prev_idx].title }} {% else %}{% endif %} {% if next_idx < chapitres.size %} Suivant →{{ chapitres[next_idx].title }} {% endif %}
-{% endif %}
-© {{ site.time | date: "%Y" }} · {{ site.title }}
+        {{ content }}
+      </article>
+
+      {% if page.collection == "chapitres" %}
+        {% for c in chapitres %}{% if c.url == page.url %}{% assign idx = forloop.index0 %}{% endif %}{% endfor %}
+        {% assign prev_idx = idx | minus: 1 %}
+        {% assign next_idx = idx | plus: 1 %}
+        <div class="pager">
+          {% if idx > 0 %}
+            <a class="prev" href="{{ chapitres[prev_idx].url | relative_url }}"><small>← Précédent</small><span>{{ chapitres[prev_idx].title }}</span></a>
+          {% else %}<span></span>{% endif %}
+          {% if next_idx < chapitres.size %}
+            <a class="next" href="{{ chapitres[next_idx].url | relative_url }}"><small>Suivant →</small><span>{{ chapitres[next_idx].title }}</span></a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </main>
+  </div>
+
+  <footer>© {{ site.time | date: "%Y" }} · {{ site.title }}</footer>
+</body>
+</html>
