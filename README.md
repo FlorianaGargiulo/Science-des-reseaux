@@ -1,27 +1,3 @@
 # Science des réseaux sociaux et économiques
 
-Site du cours, prêt pour **GitHub Pages** (Jekyll, sans thème externe).
-
-## Mise en ligne
-
-1. Créer un dépôt GitHub et y pousser le contenu de ce dossier.
-2. *Settings → Pages → Build and deployment → Deploy from a branch* → branche `main`, dossier `/ (root)`.
-3. Le site est publié sur `https://<utilisateur>.github.io/<dépôt>/`.
-4. Si le site est dans un sous-chemin (cas général), décommenter et adapter `baseurl` dans `_config.yml`.
-
-## Structure
-
-- `index.md` : page d'introduction.
-- `_chapitres/NN-nom.md` : un fichier par chapitre (Markdown). Le champ `ordre` dans l'en-tête fixe l'ordre dans le menu.
-- `_layouts/default.html` : mise en page (menu latéral, navigation précédent/suivant).
-- `assets/style.css` : styles (thème clair/sombre automatique).
-
-## Ajouter un chapitre
-
-Copier un fichier de `_chapitres/`, changer `title` et `ordre`. Le menu et la navigation se mettent à jour tout seuls.
-Les formules LaTeX sont supportées avec `$...$` (MathJax).
-
-## Aperçu local (optionnel)
-
-    gem install bundler jekyll
-    jekyll serve
+Social networks are structures of relationships among individuals, groups, or organizations, and they shape much of how information, resources, opinions, and behaviors circulate in society. Rather than treating people as isolated units, network science focuses on the pattern of ties between them: who is connected to whom, how strongly, and through which paths. This relational perspective helps explain phenomena that individual attributes alone cannot, such as why some ideas spread widely while others fade, how inequalities in access to opportunities emerge, and how communities form and persist. Over the past decades, the combination of graph theory, statistical physics, sociology, and economics, together with the availability of large-scale digital data, has turned the study of social and economic networks into a quantitative and interdisciplinary field, which this course introduces through its core concepts, models, and empirical methods.
